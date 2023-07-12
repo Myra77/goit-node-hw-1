@@ -20,32 +20,36 @@ const argv = program.opts();
 
 
 async function invokeAction({ action, id, name, email, phone }) {
-    switch (action) {
-        case "list":
-            const allContacts = await listContacts();
-            console.table(allContacts);
-            break;
+    try {
+        switch (action) {
+            case "list":
+                const allContacts = await listContacts();
+                console.table(allContacts);
+                break;
 
-        case "get":
-            const contact = await getContactById(id);
-            console.log(contact);
-            if(!contact) {
-                throw new Error(`Product with id=${id} not found!`)
-            }
-            break;
+            case "get":
+                const contact = await getContactById(id);
+                console.log(contact);
+                if(!contact) {
+                    throw new Error(`Product with id=${id} not found!`)
+                }
+                break;
 
-        case "add":
-            const addNewContact = await addContact({ name, email, phone });
-            console.log("addNewContact: ", addNewContact);
-            break;
+            case "add":
+                const addNewContact = await addContact({ name, email, phone });
+                console.log("addNewContact: ", addNewContact);
+                break;
 
-        case "remove":
-            const removeOldContact = await removeContact(id);
-            console.log("removeOldContact : ", removeOldContact);
-            break;
+            case "remove":
+                const removeOldContact = await removeContact(id);
+                console.log("removeOldContact : ", removeOldContact);
+                break;
 
-        default:
-            console.warn('\x1B[31m Unknown action type!');
+            default:
+                console.warn('\x1B[31m Unknown action type!');
+        }
+    }   catch (error) {
+            console.log(error);
         }
 };
 
